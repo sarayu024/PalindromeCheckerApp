@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+public class UseCase10PalindromeCheckerApp {
+
+    /**
+     * Application entry point for UC10.
+     *
+     * @param args Command-line arguments
+     */
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("=== Case-Insensitive Palindrome Checker ===");
+        System.out.print("Enter a string: ");
+
+        String input = scanner.nextLine();
+
+        // Normalize the string
+        String normalized = input.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+        boolean isPalindrome = true;
+
+        // Compare characters from both ends
+        for (int i = 0; i < normalized.length() / 2; i++) {
+
+            // Compare symmetric characters
+            if (normalized.charAt(i) != normalized.charAt(normalized.length() - 1 - i)) {
+                isPalindrome = false;
+                break;
+            }
+        }
+
+        if (isPalindrome) {
+            System.out.println("Result: The string IS a palindrome.");
+        } else {
+            System.out.println("Result: The string is NOT a palindrome.");
+        }
+
+        scanner.close();
+    }
+}
