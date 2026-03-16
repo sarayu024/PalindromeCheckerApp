@@ -1,0 +1,29 @@
+import java.util.Stack;
+
+/**
+ * CLASS - StackStrategy
+ * Implements palindrome checking using a Stack (LIFO).
+ */
+class StackStrategy implements PalindromeStrategy {
+    @Override
+    public boolean isValid(String text) {
+        if (text == null) return false;
+        
+        // Clean the string (remove non-alphanumeric and lowercase)
+        String cleanText = text.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        Stack<Character> stack = new Stack<>();
+
+        // Push all chars onto stack
+        for (char c : cleanText.toCharArray()) {
+            stack.push(c);
+        }
+
+        // Pop and compare
+        StringBuilder reversed = new StringBuilder();
+        while (!stack.isEmpty()) {
+            reversed.append(stack.pop());
+        }
+
+        return cleanText.equals(reversed.toString());
+    }
+}
