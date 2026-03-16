@@ -1,0 +1,36 @@
+public class UseCase4PalindromeCheckerApp {
+
+    /**
+     * Application entry point for UC4.
+     * @param args Command-Line arguments
+     */
+    public static void main(String[] args) {
+
+        String input = "madam"; // Test string
+
+        // Convert string to character array
+        char[] characters = input.toCharArray();
+
+        int start = 0;
+        int end = characters.length - 1;
+
+        boolean isPalindrome = true;
+
+        // Two-pointer comparison
+        while (start < end) {
+            if (characters[start] != characters[end]) {
+                isPalindrome = false;
+                break;
+            }
+            start++;
+            end--;
+        }
+
+        // Display result
+        if (isPalindrome) {
+            System.out.println("The string \"" + input + "\" is a Palindrome.");
+        } else {
+            System.out.println("The string \"" + input + "\" is NOT a Palindrome.");
+        }
+    }
+}
