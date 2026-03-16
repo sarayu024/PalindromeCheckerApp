@@ -1,29 +1,112 @@
+import java.util.Scanner;
 import java.util.Stack;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 /**
- * CLASS - StackStrategy
- * Implements palindrome checking using a Stack (LIFO).
+ * ==========================================================
+ * MAIN CLASS - UseCase12PalindromeCheckerApp
+ * ==========================================================
+ * Use Case 12: Strategy Pattern for Palindrome Algorithms
+ *
+ * This program demonstrates how different palindrome
+ * validation algorithms can be selected dynamically
+ * using the Strategy Design Pattern.
  */
+
+public class UseCase12PalindromeCheckerApp {
+
+    public static void main(String[] args) {
+
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine();
+
+        System.out.println("\nChoose Algorithm:");
+        System.out.println("1. Stack Strategy");
+        System.out.println("2. Deque Strategy");
+
+        int choice = scanner.nextInt();
+
+        PalindromeStrategy strategy;
+
+        // Inject strategy at runtime
+        if (choice == 1) {
+            strategy = new StackStrategy();
+        } else {
+            strategy = new DequeStrategy();
+        }
+
+        boolean result = strategy.isPalindrome(input);
+
+        System.out.println("\nIs Palindrome? : " + result);
+
+        scanner.close();
+    }
+}
+
+/**
+ * ==========================================================
+ * INTERFACE - PalindromeStrategy
+ * ==========================================================
+ * Defines a contract for palindrome algorithms.
+ */
+
+interface PalindromeStrategy {
+    boolean isPalindrome(String text);
+}
+
+/**
+ * ==========================================================
+ * CLASS - StackStrategy
+ * ==========================================================
+ * Uses Stack data structure to check palindrome.
+ */
+
 class StackStrategy implements PalindromeStrategy {
-    @Override
-    public boolean isValid(String text) {
-        if (text == null) return false;
-        
-        // Clean the string (remove non-alphanumeric and lowercase)
-        String cleanText = text.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+
+    public boolean isPalindrome(String text) {
+
         Stack<Character> stack = new Stack<>();
 
-        // Push all chars onto stack
-        for (char c : cleanText.toCharArray()) {
+        for (char c : text.toCharArray()) {
             stack.push(c);
         }
 
-        // Pop and compare
-        StringBuilder reversed = new StringBuilder();
-        while (!stack.isEmpty()) {
-            reversed.append(stack.pop());
+        for (char c : text.toCharArray()) {
+            if (c != stack.pop()) {
+                return false;
+            }
         }
 
-        return cleanText.equals(reversed.toString());
+        return true;
+    }
+}
+
+/**
+ * ==========================================================
+ * CLASS - DequeStrategy
+ * ==========================================================
+ * Uses Deque (double-ended queue) to check palindrome.
+ */
+
+class DequeStrategy implements PalindromeStrategy {
+
+    public boolean isPalindrome(String text) {
+
+        Deque<Character> deque = new ArrayDeque<>();
+
+        for (char c : text.toCharArray()) {
+            deque.addLast(c);
+        }
+
+        while (deque.size() > 1) {
+            if (!deque.removeFirst().equals(deque.removeLast())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 }
