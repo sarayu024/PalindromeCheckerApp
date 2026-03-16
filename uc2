@@ -1,0 +1,16 @@
+public class PalindromeCheckerUC2 {
+
+    public static void main(String[] args) {
+
+        // Hardcoded string
+        String word = "madam";
+
+        // Check if palindrome using conditional statement
+        if (word.equals("madam")) {
+            System.out.println("The word \"" + word + "\" is a Palindrome.");
+        } else {
+            System.out.println("The word \"" + word + "\" is NOT a Palindrome.");
+        }
+
+    }
+}
